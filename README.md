@@ -3,6 +3,23 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+### Implementation
+
+
+### Reflection
+In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increased the proportional gain (Kp) increased overshoot, this was used at the start for making sharping turns. Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) helps to counteract the affects of the overshoot created by Kp and Ki while helping to minimize additional occilations (settling time). 
+
+
+#### Table 1. Affect of increasing gains on step responce*
+| PID Gain   | % Overshoot   | Settling Time | Steady-State Error  |
+| ---------- |:-------------:| -------------:| -------------------:|
+|  Kp        | Increases     | Minimal Impact| Decreases           |
+|  Ki        | Increases     | Increases     | Zero Impact on SS Err|
+|  Kd        | Decreases     | Decreases     | No Impact           |
+###### * Taken from Dorf, Richard C. and Robert H Bishop, `Modern Control Systems, 12th Ed.`, Prentice Hall, NJ, 2011.
+
+
+
 ## Dependencies
 
 * cmake >= 3.5
