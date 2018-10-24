@@ -8,7 +8,7 @@ Self-Driving Car Engineer Nanodegree Program
 The equation in Figure 1 is the continuous time PID controller equation. The PID controller for this project takes the crosstrack error (CTE) provided by the simulator and calculates a proportional error, an integral error, and a derivative error. The proportional error is simply the CTE, the integral error is the sum of all the previous CTEs received upto the current point. The derivative error is the current CTE minus the previous CTE. Proportional (Kp), integral (Ki), and derivative (Kd) gains are multiplied by their respective errors and summed. In this project manual tuning of the gains was performed. 
 
 #### Figure 1: PID Equation
-<img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png.jpg" height="120" width="240" />
+<img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png" height="120" width="240" />
 [* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
 
 The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (lines 27-40) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (line 83) is called to calculate the PID equation (line 47-51). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
@@ -37,7 +37,7 @@ Tuning of the gains was performed using Table 1 as a guide, additionally the Kp 
 #### Video of PID Controlled Car
 
 
-<a href="https://youtu.be/j1J_kFE4kjM" target="_blank"><img src="https://i.ytimg.com/vi/j1J_kFE4kjM/3.jpg" alt="PID Controller Video" width="240" height="180" border="10" /></a>
+<a href="https://youtu.be/j1J_kFE4kjM" target="_blank"><img src="https://i.ytimg.com/vi/j1J_kFE4kjM/2.jpg" alt="PID Controller Video" width="240" height="180" border="10" /></a>
 
 ## Dependencies
 
