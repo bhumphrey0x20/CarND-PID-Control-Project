@@ -5,9 +5,17 @@ Self-Driving Car Engineer Nanodegree Program
 
 ### Implementation
 
+The equation in Figure 1 is the continuous time PID controller equation. The PID controller for this project takes the crosstrack error (CTE) provided by the simulator from the simulator and calculates a proportional, an integral error, and a derivative error. The proportional error is simply the cte, the integral error is the sum of all the cte received. The derivative error is the current cte minus the previous cte. Proportional (Kp), integral (Ki), and derivative (kd) gains are multiplied by their respective errors and summed. In this project manual tuning of the gains was performed. 
+
+#### Figure 1: PID Equation
+<img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png.jpg" height="120" width="240" />
+[* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
+
+The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (lines 27-40) and saved as variables in the class PID. Next, in main.cpp `pid.pid_cntl()` (line 83) is called to calculate the PID equation (line 47-51). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
+
 
 ### Reflection
-In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increased the proportional gain (Kp) increased overshoot, this was used at the start for making sharping turns. Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) helps to counteract the affects of the overshoot created by Kp and Ki while helping to minimize additional occilations (settling time). 
+In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increased the proportional gain (Kp) increased overshoot, this was used at the start for handing sharping turns, this also increased occilations in straightline driving (increased settling time). Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) helps to counteract the affects of the overshoot created by Kp and Ki while helping to minimize additional occilations (settling time). However, increasing Kd too much created instability in driving, resulting in the car turning circles off the track. 
 
 
 #### Table 1. Affect of increasing gains on step responce*
@@ -16,8 +24,16 @@ In the implementation, the table below was used as a guide for tuning of each ga
 |  Kp        | Increases     | Minimal Impact| Decreases           |
 |  Ki        | Increases     | Increases     | Zero Impact on SS Err|
 |  Kd        | Decreases     | Decreases     | No Impact           |
-###### * Taken from Dorf, Richard C. and Robert H Bishop, `Modern Control Systems, 12th Ed.`, Prentice Hall, NJ, 2011.
+###### * Taken from Dorf, Richard C. and Robert H Bishop, `Modern Control Systems, 12th Ed.` pg 483. Prentice Hall, NJ, 2011.
 
+Tuning of the gains was performed using Table 1 as a guide, additionally the Kp was found using the manual tuning recommendation from Dorf, Richard C. and Robert H Bishop, `Modern Control Systems, 12th Ed.` pg. 483. Prentice Hall, NJ, 2011. Ki and Kd were set at 0 while Kp was increased from 0 until the car was immediately unstable. Then this value of Kp was devided by 2. Next Kd was increase until the car drove reasonable well at straightline driving. Then Ki and Kd (and occasionally Kp) were adjusted to make take turns and stabilze driving. 
+
+#### Table 2. Gain Values for Project
+| PID Gain   | Values   | 
+| ---------- |:-------------:|
+|  Kp        | 0.03     |
+|  Ki        | 0.01     |
+|  Kd        | 0.7     |
 
 
 ## Dependencies
