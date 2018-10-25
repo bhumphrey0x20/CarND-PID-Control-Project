@@ -9,10 +9,8 @@ using namespace std;
 
 
 PID::PID() {
-//init: Kp,   Ki,    Kd	
-	//Init(0.03, 0.03, 1.5); 
-	//Init(0.03, 0.03, 1.6);	
-Init(0.03, 0.01, 0.7);
+	//init: Kp,   Ki,    Kd	
+	Init(0.03, 0.01, 1.5);
 }
 
 PID::~PID() {}
