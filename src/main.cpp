@@ -9,7 +9,7 @@
 // for convenience
 using json = nlohmann::json;
 using namespace std;
-
+// change 'write_pid_data' to true to print cte and steering angle to file
 fstream fout;
 bool write_pid_data = false;
 
@@ -88,11 +88,11 @@ int main()
 					}
           
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          //std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = 0.2;
+          msgJson["throttle"] = 0.1;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
