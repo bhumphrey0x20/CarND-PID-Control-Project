@@ -4,8 +4,15 @@
 #include "PID.h"
 #include <math.h>
 
+#include <fstream>
+
 // for convenience
 using json = nlohmann::json;
+using namespace std;
+
+fstream fout;
+bool write_pid_data = false;
+
 
 // For converting back and forth between radians and degrees.
 constexpr double pi() { return M_PI; }
@@ -30,12 +37,25 @@ std::string hasData(std::string s) {
 
 int main()
 {
+
+
   uWS::Hub h;
 
   PID pid;
+
+	if(write_pid_data){
+		fout.open("./pid.dat",ios::out);
+		if(!fout.is_open()){
+			cout << "file not open, cannot write." << endl << endl;
+			write_pid_data = false;
+		}
+	}
+
   // TODO: Initialize the pid variable.
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+		static int cnt = 0; 
+
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -57,15 +77,23 @@ int main()
           * NOTE: Feel free to play around with the throttle and speed. Maybe use
           * another PID controller to control the speed!
           */
+					cnt++;
+					
+					pid.UpdateError(cte);
+					steer_value = pid.pid_cntl();
+
+					// write error, steer angle to file
+					if(write_pid_data){
+						fout << cte << "\t" << steer_value << endl;
+					}
           
           // DEBUG
-          //std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = 0.3;
+          msgJson["throttle"] = 0.2;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
       } else {
