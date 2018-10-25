@@ -3,11 +3,11 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
-### Implementation
+### Implementation 
 
 The equation in Figure 1 is the continuous time PID controller equation. The PID controller for this project takes the crosstrack error (CTE) provided by the simulator and calculates a proportional error, an integral error, and a derivative error. The proportional error is simply the CTE, the integral error is the sum of all the previous CTEs received upto the current point. The derivative error is the current CTE minus the previous CTE. Proportional (Kp), integral (Ki), and derivative (Kd) gains are multiplied by their respective errors and summed. In this project manual tuning of the gains was performed. 
 
-#### Figure 1: PID Equation
+#### Figure 1: PID Equation*
 <img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png" height="120" width="240" />
 [* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
 
