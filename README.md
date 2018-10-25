@@ -18,7 +18,7 @@ The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). 
 | ---------- |:-------------:|
 |  Kp        | 0.03     |
 |  Ki        | 0.01     |
-|  Kd        | 0.7     |
+|  Kd        | 1.5     |
 
 ### Reflection
 In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increasing the proportional gain (Kp) increased overshoot, this was used at the start for handing sharping turns, this also increased occilations in straightline driving (increased settling time). Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) was used to counteract the affects of the overshoot created by Kp and Ki (i.e. not turning to far on turns) while helping to minimize additional occilations (settling time). However, increasing Kd too much created instability in driving, resulting in the car turning circles off the track. 
