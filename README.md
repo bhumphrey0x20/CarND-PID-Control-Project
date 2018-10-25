@@ -11,7 +11,7 @@ The equation in Figure 1 is the continuous time PID controller equation. The PID
 <img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png" height="120" width="240" />
 [* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
 
-The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (lines 27-40) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (line 83) is called to calculate the PID equation (line 47-51). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
+The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (PID.cpp, lines 25-38) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (main.cpp, line 83) is called to calculate the PID equation (PID.cpp, line 45-49). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
 
 #### Table 1. Gain Values for Project
 | PID Gain   | Values   | 
