@@ -72,7 +72,7 @@ int main()
           double angle = std::stod(j[1]["steering_angle"].get<std::string>());
           double steer_value;
           /*
-          * TODO: Calcuate steering value here, remember the steering value is
+          * Calcuate steering value here, remember the steering value is
           * [-1, 1].
           * NOTE: Feel free to play around with the throttle and speed. Maybe use
           * another PID controller to control the speed!
@@ -80,7 +80,7 @@ int main()
 					cnt++;
 					
 					pid.UpdateError(cte);
-					steer_value = pid.pid_cntl();
+					steer_value = pid.pid_cntl(speed);
 
 					// write error, steer angle to file
 					if(write_pid_data){
@@ -92,7 +92,7 @@ int main()
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = 0.1;
+          msgJson["throttle"] = 0.4;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
