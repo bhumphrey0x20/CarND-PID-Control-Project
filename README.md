@@ -18,7 +18,7 @@ The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). 
 #### Changes for Resubmition 
 Between the first and second submission, a graphics card (Nvidia GTX 1060) was installed with linux drivers. This made the simulator perform better on the system. PID tuning was performed starting with gain values of Kp = 0.2, Ki =  0.0, and kd = 2.0 (per the reviewer's suggestion ). Also the trottle value was set to 0.4 (main.cpp, line 95), which gave the car a max speed of around 40.0 mph.
 
-At the start of the similator the gain values made the car occilate to the left and right sides of the track, as it accelerated from 0.0 mph to 30.0 mph. To help resolve this, a three-point moving avgerate filter was added to the speed input of the `pid_cntl()` function. The gains were set to one set of values when the average speed was below 25.0 mph and another set of values at average speeds > 25.0 mph. This helped the initial straight line driving, but cause a sudden jerk of the car at around 25.0 mph. 
+At the start of the similator the gain values made the car oscilate to the left and right sides of the track, as it accelerated from 0.0 mph to 30.0 mph. To help resolve this, a three-point moving avgerate filter was added to the speed input of the `pid_cntl()` function. The gains were set to one set of values when the average speed was below 25.0 mph and another set of values at average speeds > 25.0 mph. This helped the initial straight line driving, but cause a sudden jerk of the car at around 25.0 mph. 
 
 Future work could included creating a table of values for different speeds to smooth out this transition and improve overall driving performance. 
 
@@ -30,7 +30,7 @@ Future work could included creating a table of values for different speeds to sm
 |  Kd        | 4.15     |
 
 ### Reflection
-In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increasing the proportional gain (Kp) increased overshoot, this was used at the start for handing sharping turns, this also increased occilations in straightline driving (increased settling time). Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) was used to counteract the affects of the overshoot created by Kp and Ki (i.e. not turning to far on turns) while helping to minimize additional occilations (settling time). However, increasing Kd too much created instability in driving, resulting in the car turning circles off the track. 
+In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increasing the proportional gain (Kp) increased overshoot, this was used at the start for handing sharping turns, this also increased oscilations in straightline driving (increased settling time). Increasing the integral gain (Ki) was also used for making turns, but also increases oscilations afterward (increasing settling time). Increasing the derivaive gain (Kd) was used to counteract the affects of the overshoot created by Kp and Ki (i.e. not turning to far on turns) while helping to minimize additional oscilations (settling time). However, increasing Kd too much created instability in driving, resulting in the car turning circles off the track. 
 
 
 #### Table 2. Affect of increasing gains on step responce*
