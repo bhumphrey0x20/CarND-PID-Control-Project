@@ -8,9 +8,9 @@ Self-Driving Car Engineer Nanodegree Program
 The equation in Figure 1 is the continuous time PID controller equation. The PID controller for this project takes the crosstrack error (CTE) provided by the simulator and calculates a proportional error, an integral error, and a derivative error. The proportional error is simply the CTE, the integral error is the sum of all the previous CTEs received upto the current point. The derivative error is the current CTE minus the previous CTE. Proportional (Kp), integral (Ki), and derivative (Kd) gains are multiplied by their respective errors and summed. In this project manual tuning of the gains was performed. 
 
 #### Figure 1: PID Equation*
-<img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png" height="120" width="240" />
+<img src="https://github.com/bhumphrey0x20/CarND-PID-Control-Project/blob/master/PIDController_Equation.png" height="120" width="240" /> 
 [* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
-
+<p><p>
 
 The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (PID.cpp, lines 27-40) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (main.cpp, line 83) is called to calculate the PID equation (PID.cpp, line 47-74). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
 
@@ -18,9 +18,9 @@ The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). 
 #### Changes for Resubmition 
 Between the first and second submission, a graphics card (Nvidia GTX 1060) was installed with linux drivers. This made the simulator perform better on the system. PID tuning was performed starting with gain values of Kp = 0.2, Ki =  0.0, and kd = 2.0 (per the reviewer's suggestion ). Also the trottle value was set to 0.4 (main.cpp, line 95), which gave the car a max speed of around 40.0 mph.
 
-At the start of the similator the gain values made the car occillate to the left and right sides of the track, as it accellerated from 0.0 mph to 30.0 mph. To help resolve this a three-point moving avgerate filter was added to the speed input of the `pid_cntl()` function, then the gains were set to one set of values when the average speed was below 25.0 mph, and another set of values at average speeds > 25.0 mph. This helped the initial straight line driving, but cause a sudden jerk at around 25.0 mph. 
+At the start of the similator the gain values made the car occilate to the left and right sides of the track, as it accelerated from 0.0 mph to 30.0 mph. To help resolve this, a three-point moving avgerate filter was added to the speed input of the `pid_cntl()` function. The gains were set to one set of values when the average speed was below 25.0 mph and another set of values at average speeds > 25.0 mph. This helped the initial straight line driving, but cause a sudden jerk of the car at around 25.0 mph. 
 
-Future work could included creating a table of values for different speeds to smooth out this transition and improve driving performance. 
+Future work could included creating a table of values for different speeds to smooth out this transition and improve overall driving performance. 
 
 #### Table 1. Gain Values for Project ( avg speed > 25.0 mph) 
 | PID Gain   | Values   | 
@@ -43,10 +43,10 @@ In the implementation, the table below was used as a guide for tuning of each ga
 
 Tuning of the gains was performed using Table 1 as a guide, additionally the Kp was found using the manual tuning recommendation from Dorf, Richard C. and Robert H Bishop, `Modern Control Systems, 12th Ed.` pg. 483. Prentice Hall, NJ, 2011. Ki and Kd were set at 0 while Kp was increased from 0 until the car was immediately unstable. Then this value of Kp was devided by 2. Next Kd was increase until the car drove reasonable well at straightline driving. Then Ki and Kd (and occasionally Kp) were adjusted to make take turns and stabilze driving. 
 
-#### Video of PID Controlled Car
+#### Video of PID Controlled Car (Resubmition Video)
 
 
-<a href="https://youtu.be/j1J_kFE4kjM" target="_blank"><img src="https://i.ytimg.com/vi/j1J_kFE4kjM/2.jpg" alt="PID Controller Video" width="240" height="180" border="10" /></a>
+<a href="https://youtu.be/1J50n9_MODs" target="_blank"><img src="https://i.ytimg.com/vi/1J50n9_MODs/2.jpg" alt="PID Controller Video" width="240" height="180" border="10" /></a>
 
 ## Dependencies
 
