@@ -12,14 +12,22 @@ The equation in Figure 1 is the continuous time PID controller equation. The PID
 [* Image from http://wiki.theuavguide.com/wiki/File:PIDController_Equation.png ]
 
 
-The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (PID.cpp, lines 25-38) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (main.cpp, line 83) is called to calculate the PID equation (PID.cpp, line 45-49). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
+The CTE is passed as an argument to `pid.UpdateError()` in main.cpp ( line 82). PID.cpp contains the function definition for `pid.UpdateError()`, here the proportional, integral and derivative errors are calculated (PID.cpp, lines 27-40) and saved as variables in the class PID. Next, in main.cpp the function `pid.pid_cntl()` (main.cpp, line 83) is called to calculate the PID equation (PID.cpp, line 47-74). `pid.pid_cntl()` returns the updated steering angle based on the PID equation. Note the equation in the code is a negative sum to compensate for the simulator steering calculations (were turning left, counter-clockwise, is negative and right clockwise is positive). 
 
-#### Table 1. Gain Values for Project
+
+#### Changes for Resubmition 
+Between the first and second submission, a graphics card (Nvidia GTX 1060) was installed with linux drivers. This made the simulator perform better on the system. PID tuning was performed starting with gain values of Kp = 0.2, Ki =  0.0, and kd = 2.0 (per the reviewer's suggestion ). Also the trottle value was set to 0.4 (main.cpp, line 95), which gave the car a max speed of around 40.0 mph.
+
+At the start of the similator the gain values made the car occillate to the left and right sides of the track, as it accellerated from 0.0 mph to 30.0 mph. To help resolve this a three-point moving avgerate filter was added to the speed input of the `pid_cntl()` function, then the gains were set to one set of values when the average speed was below 25.0 mph, and another set of values at average speeds > 25.0 mph. This helped the initial straight line driving, but cause a sudden jerk at around 25.0 mph. 
+
+Future work could included creating a table of values for different speeds to smooth out this transition and improve driving performance. 
+
+#### Table 1. Gain Values for Project ( avg speed > 25.0 mph) 
 | PID Gain   | Values   | 
 | ---------- |:-------------:|
-|  Kp        | 0.03     |
-|  Ki        | 0.01     |
-|  Kd        | 1.5     |
+|  Kp        | 0.2     |
+|  Ki        | 0.0225     |
+|  Kd        | 4.15     |
 
 ### Reflection
 In the implementation, the table below was used as a guide for tuning of each gain component in the algorithm. Increasing the proportional gain (Kp) increased overshoot, this was used at the start for handing sharping turns, this also increased occilations in straightline driving (increased settling time). Increasing the integral gain (Ki) was also used for making turns, but also increases occilations afterward (increasing settling time). Increasing the derivaive gain (Kd) was used to counteract the affects of the overshoot created by Kp and Ki (i.e. not turning to far on turns) while helping to minimize additional occilations (settling time). However, increasing Kd too much created instability in driving, resulting in the car turning circles off the track. 
